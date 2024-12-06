@@ -1,0 +1,245 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/OsbWood.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+
+WorldInfo {
+  info [
+    "In this example, the robot moves down a slope."
+    "The altimeter is used to record the robots height."
+  ]
+  title "Altimeter"
+  basicTimeStep 8
+  contactProperties [
+    ContactProperties {
+      material2 "body"
+      coulombFriction [
+        0
+      ]
+      softCFM 0.1
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.26651592040050576 -0.9249401185608442 -0.2710259051266555 6.059601488956069
+  position -1.734614508312112 -0.10299319296041992 0.3893267113645007
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+}
+PointLight {
+  attenuation 0 0 1
+  intensity 0.6
+  location 0.6 0 0
+}
+DEF SLOPE Solid {
+  translation 0 0 0.15
+  rotation 0 1 0 -0.4
+  children [
+    Shape {
+      appearance OsbWood {
+        textureTransform TextureTransform {
+          scale 0.5 2
+        }
+      }
+      geometry DEF BOX0 Box {
+        size 0.8 0.2 0.02
+      }
+    }
+  ]
+  name "green box"
+  boundingObject USE BOX0
+}
+Robot {
+  translation -0.10037150514250137 1.7098943534060854e-05 0.1185259160490782
+  rotation -0.2458300372887352 -1.2578462884642114e-06 0.9693129488276926 3.141547649678406
+  children [
+    Altimeter {
+    }
+    Pose {
+      translation 0 0 0.0415
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.0820075 0.364731 0.8
+            roughness 1
+            metalness 0
+          }
+          geometry DEF BODY Cylinder {
+            height 0.08
+            radius 0.045
+          }
+        }
+      ]
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 16.72000241586934
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+          consumptionFactor 70
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0.04499999999999978 0.025
+        rotation -0.6929920009655449 0.6929920536857769 -0.19880669034552015 2.7490969420921902
+        children [
+          DEF WHEEL Pose {
+            rotation 0.577656895078166 0.5771968951617173 -0.5771968951617173 -2.093935
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 0
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.025
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject USE WHEEL
+        physics DEF PHYSICS_WHEEL Physics {
+          density -1
+          mass 0.05
+        }
+        linearVelocity -5.2791890617473594e-06 -2.0617652164312972e-13 -2.2320008875273796e-06
+        angularVelocity 9.43184584112019e-09 -1.029047412275505e-08 -2.228194571086903e-08
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 16.720002405396095
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+          consumptionFactor 70
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.045 0.025
+        rotation -0.6929920004244332 0.6929920531446654 -0.19880669411788887 2.7490969348343133
+        children [
+          USE WHEEL
+        ]
+        boundingObject USE WHEEL
+        physics USE PHYSICS_WHEEL
+        linearVelocity -5.277183691736291e-06 -3.089069541965944e-13 -2.2311520009666402e-06
+        angularVelocity 9.431841788691646e-09 -1.0290540627482363e-08 -2.2281968568506796e-08
+      }
+    }
+    DistanceSensor {
+      translation 0.042 0.02 0.063
+      rotation 0 0 -1 -0.4999
+      children [
+        DEF SENSOR Transform {
+          rotation 0.577656895078166 0.5771968951617173 -0.5771968951617173 -2.09394
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.97 0.98 0.25
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.004
+                radius 0.008
+              }
+            }
+          ]
+        }
+      ]
+      name "das0"
+      lookupTable [
+        0 1024 0
+        0.05 1024 0
+        0.15 0 0
+      ]
+      numberOfRays 2
+    }
+    DistanceSensor {
+      translation 0.042 -0.02 0.063
+      rotation 0 0 1 -0.500795
+      children [
+        DEF SENSOR Transform {
+          rotation 0.577656895078166 0.5771968951617173 -0.5771968951617173 -2.09394
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.97 0.98 0.25
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.004
+                radius 0.008
+              }
+            }
+          ]
+        }
+        USE SENSOR
+      ]
+      name "das1"
+      lookupTable [
+        0 1024 0
+        0.05 1024 0
+        0.15 0 0
+      ]
+      numberOfRays 2
+    }
+    DEF SMILLE Transform {
+      translation 0.036 0 0.025
+      rotation 0.09307183767108612 -0.34813074136048944 -0.9328143544952141 1.63783
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.72 0.054 0.52
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.018
+            radius 0.009
+            subdivision 3
+          }
+        }
+      ]
+    }
+  ]
+  name "MyBot"
+  contactMaterial "body"
+  boundingObject Pose {
+    translation 0 0 0.0415
+    rotation 0 0 1 -1.570796
+    children [
+      USE BODY
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 0.5
+  }
+  controller ""
+}
